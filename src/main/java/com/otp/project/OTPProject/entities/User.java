@@ -34,7 +34,7 @@ public class User implements UserDetails {
 	private String userName;
 
 	@Column(name = "user_password")
-	private String user_password;
+	private String userPassword;
 
 	@Enumerated(EnumType.STRING)
 	private Role role;
@@ -46,7 +46,7 @@ public class User implements UserDetails {
 
 	@Override
 	public String getPassword() {
-		return this.user_password;
+		return this.userPassword;
 	}
 
 	@Override
