@@ -10,5 +10,5 @@ import lombok.NoArgsConstructor;
 public class UserSignInResponseDTO {
 
 	private String token;
-	private boolean created;
+	private String message;
 }
