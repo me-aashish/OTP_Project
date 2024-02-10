@@ -11,7 +11,7 @@ public class GenerateOtpUtil {
 
 		// using random class to generate random numbers
 		Random random = new Random();
-		int randomNumber = random.nextInt(9999);
+		int randomNumber = random.nextInt(999999);
 		String output = Integer.toString(randomNumber);
 
 		/**
@@ -19,7 +19,7 @@ public class GenerateOtpUtil {
 		 * it'll get converted to 12,
 		 *  so to make it 0012, add remaining 0s.
 		 */
-		while (output.length() < 4) {
+		while (output.length() < 6) {
 			output = "0" + output;
 		}
 

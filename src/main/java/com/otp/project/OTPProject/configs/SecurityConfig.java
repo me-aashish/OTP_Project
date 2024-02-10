@@ -33,8 +33,9 @@ public class SecurityConfig {
 		//				.authenticationProvider(authenticationProvider)
 		//				.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 		http.csrf().disable().authorizeRequests().requestMatchers("/api/v1/auth/**").permitAll()
-				.requestMatchers("/api/v1/generateOTP").permitAll().anyRequest().authenticated().and()
-				.exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement()
+				.requestMatchers("/api/v1/generateOTP").permitAll().requestMatchers("/api/v1/documentDownload")
+				.permitAll().anyRequest().authenticated().and().exceptionHandling()
+				.authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 				.authenticationProvider(authenticationProvider)
 				.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);

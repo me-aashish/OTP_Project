@@ -22,7 +22,7 @@ public class EmailUtil {
 		mimeMessageHelper.setSubject("Your OTP for document download");
 		mimeMessageHelper.setText("""
 				<div>
-				  <h3>Your OTP for downloading document is = %s</h3>
+				  <h3>Your OTP for downloading document is : %s</h3>
 				</div>
 				""".formatted(otp), true);
 
