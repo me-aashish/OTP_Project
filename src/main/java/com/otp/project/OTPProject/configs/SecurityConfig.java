@@ -18,7 +18,7 @@ import lombok.RequiredArgsConstructor;
 public class SecurityConfig {
 
 	@Autowired
-	JwtAuthFilter jwtAuthFilter;
+	JwtAuthFilterConfig jwtAuthFilter;
 
 	private final AuthenticationProvider authenticationProvider;
 	private final JwtAuthenticationEntryPointConfig jwtAuthenticationEntryPoint;
@@ -26,16 +26,16 @@ public class SecurityConfig {
 	// security chain config for handling the type of incoming requests using auth entry point, request matchers etc.
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-		//
-		//		http.csrf(AbstractHttpConfigurer::disable)
-		//				.authorizeHttpRequests(req -> req.requestMatchers(WHITE_LIST_URL).permitAll().requestMatchers("")
-		//						.hasAnyRole(ADMIN.name()).anyRequest().authenticated())
-		//				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+
+		//		http.csrf().disable().authorizeHttpRequests().requestMatchers("/api/v1/auth/**").permitAll().anyRequest()
+		//				.authenticated().and().exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and()
+		//				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 		//				.authenticationProvider(authenticationProvider)
 		//				.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
-		http.csrf().disable().authorizeHttpRequests().requestMatchers("/api/v1/auth/**").permitAll().anyRequest()
-				.authenticated().and().exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and()
-				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+		http.csrf().disable().authorizeRequests().requestMatchers("/api/v1/auth/**").permitAll()
+				.requestMatchers("/api/v1/generateOTP").permitAll().anyRequest().authenticated().and()
+				.exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement()
+				.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 				.authenticationProvider(authenticationProvider)
 				.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
