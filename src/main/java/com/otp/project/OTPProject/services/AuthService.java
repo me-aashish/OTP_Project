@@ -65,14 +65,11 @@ public class AuthService {
 		Optional<User> optionalUser = userRepository.findByUserEmail(userLogInRequestDTO.getUserEmail());
 
 		if (optionalUser.isEmpty()) {
-			throw new EmailOrPasswordException("Wrong email or password entered");
+			throw new EmailOrPasswordException("User not found");
 		}
 
 		User user = optionalUser.get();
-		String password = user.getPassword();
-		//		if(isPasswordWrong(password)) {
-		//			throw new EmailOrPasswordException("Wrong email or password entered");
-		//		}
+		String password = userLogInRequestDTO.getUserPassword();
 		String hashedPassword = userRepository.getHashedPasswordByEmail(user.getUserEmail());
 
 		if (!passwordEncoder.matches(password, hashedPassword)) {
