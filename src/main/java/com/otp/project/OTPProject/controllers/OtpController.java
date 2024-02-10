@@ -14,6 +14,8 @@ import com.otp.project.OTPProject.DTO.OtpRequestDTO;
 import com.otp.project.OTPProject.DTO.OtpResponseDTO;
 import com.otp.project.OTPProject.services.OtpService;
 
+import jakarta.servlet.http.HttpServletResponse;
+
 @RestController
 @RequestMapping("/api/v1/")
 public class OtpController {
@@ -36,9 +38,12 @@ public class OtpController {
 
 	@PostMapping("/documentDownload")
 	public ResponseEntity<OtpResponseDTO> validateOtpAndDownloadDocument(
-			@RequestHeader("Authorization") String authorizationHeader, @RequestBody OtpRequestDTO otpRequestDTO) {
+			@RequestHeader("Authorization") String authorizationHeader, @RequestBody OtpRequestDTO otpRequestDTO,
+			HttpServletResponse response) {
 		try {
-			return new ResponseEntity<>(otpService.validateOtpAndDownloadDocument(authorizationHeader, otpRequestDTO),
+
+			return new ResponseEntity<>(
+					otpService.validateOtpAndDownloadDocument(authorizationHeader, otpRequestDTO, response),
 					HttpStatus.OK);
 		} catch (Exception e) {
 			OtpResponseDTO otpResponseDTO = new OtpResponseDTO();

@@ -1,5 +1,8 @@
 package com.otp.project.OTPProject.services;
 
+import java.io.IOException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.List;
@@ -16,6 +19,7 @@ import com.otp.project.OTPProject.utlis.EmailUtil;
 import com.otp.project.OTPProject.utlis.GenerateOtpUtil;
 
 import jakarta.mail.MessagingException;
+import jakarta.servlet.http.HttpServletResponse;
 
 @Service
 public class OtpService {
@@ -64,8 +68,8 @@ public class OtpService {
 		}
 	}
 
-	public OtpResponseDTO validateOtpAndDownloadDocument(String authorizationHeader, OtpRequestDTO otpRequestDTO)
-			throws InvalidOtpException {
+	public OtpResponseDTO validateOtpAndDownloadDocument(String authorizationHeader, OtpRequestDTO otpRequestDTO,
+			HttpServletResponse response) throws InvalidOtpException, IOException {
 
 		// get the entered otp
 		int otp = otpRequestDTO.getOtp();
@@ -110,7 +114,25 @@ public class OtpService {
 		}
 
 		// otherwise return the response
+		// Replace "your-document-url" with the actual URL of the document you want to download
+		String documentUrl = "https://onlinetestcase.com/wp-content/uploads/2023/06/500-KB.pdf";
+
+		// Open a connection to the document URL
+		URL url = new URL(documentUrl);
+		URLConnection connection = url.openConnection();
+
+		// Set the response headers
+		response.setContentType(connection.getContentType());
+		response.setContentLengthLong(connection.getContentLengthLong());
+		response.setHeader("Content-Disposition", "attachment; filename=\"document.pdf\"");
+
+		// Copy the content from the document URL to the response output stream
+		connection.getInputStream().transferTo(response.getOutputStream());
+
+		// Flush and close the response output stream
+		response.flushBuffer();
 		return otpResponseDTO;
 
 	}
+
 }
