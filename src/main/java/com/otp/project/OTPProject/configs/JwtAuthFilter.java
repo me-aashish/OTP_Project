@@ -63,6 +63,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
 		}
 
+		// triggering the next request in the cycle
 		filterChain.doFilter(request, response);
 
 	}

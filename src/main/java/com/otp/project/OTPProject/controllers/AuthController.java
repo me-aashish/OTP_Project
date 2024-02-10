@@ -26,9 +26,11 @@ public class AuthController {
 	@PostMapping("/signup")
 	public ResponseEntity<UserSignInResponseDTO> signUpUser(@RequestBody UserSignInRequestDTO userRequestDTO) {
 		try {
+			// register new user if it not exists
 			UserSignInResponseDTO userSignInResponseDTO = authService.singUpUser(userRequestDTO);
 			return new ResponseEntity<>(userSignInResponseDTO, HttpStatus.CREATED);
 		} catch (UserAlreadyExistsException e) {
+			// if user already exists throw the exception
 			UserSignInResponseDTO userSignInResponseDTO = new UserSignInResponseDTO();
 			userSignInResponseDTO.setMessage(e.getMessage());
 			return new ResponseEntity<>(userSignInResponseDTO, HttpStatus.CONFLICT);
@@ -37,12 +39,13 @@ public class AuthController {
 
 	@PostMapping("/login")
 	public ResponseEntity<UserLogInResponseDTO> logInUser(@RequestBody UserLogInRequestDTO userLogInRequestDTO) {
-		//		return ResponseEntity.ok(authService.logInUser(userLogInRequestDTO));
 
 		try {
+			// log in the user with good credentials
 			UserLogInResponseDTO userLogInResponseDTO = authService.logInUser(userLogInRequestDTO);
 			return new ResponseEntity<>(userLogInResponseDTO, HttpStatus.OK);
 		} catch (Exception e) {
+			// throw exception if credentials are bad
 			UserLogInResponseDTO userLogInResponseDTO = new UserLogInResponseDTO();
 			userLogInResponseDTO.setMessage(e.getMessage());
 			return new ResponseEntity<>(userLogInResponseDTO, HttpStatus.CONFLICT);
