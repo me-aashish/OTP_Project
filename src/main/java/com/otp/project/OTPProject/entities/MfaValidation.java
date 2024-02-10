@@ -35,8 +35,8 @@ public class MfaValidation {
 	@Column(name = "created_at")
 	private Timestamp createdAt;
 
-	@Column(name = "expired_at")
-	private Timestamp expiredAt;
+	@Column(name = "expiry_at")
+	private Timestamp expiryAt;
 
 	@Column(name = "validated_at")
 	private Timestamp validatedAt;
@@ -45,7 +45,7 @@ public class MfaValidation {
 	protected void onCreate() {
 		Timestamp currentTimestamp = Timestamp.from(Instant.now());
 		this.createdAt = currentTimestamp;
-		this.expiredAt = new Timestamp(currentTimestamp.getTime() + (5 * 60 * 1000)); // Add 5 minutes in milliseconds
+		this.expiryAt = new Timestamp(currentTimestamp.getTime() + (5 * 60 * 1000)); // Add 5 minutes in milliseconds
 	}
 
 }
