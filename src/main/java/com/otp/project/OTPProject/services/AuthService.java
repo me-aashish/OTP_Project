@@ -53,6 +53,7 @@ public class AuthService {
 
 		UserSignInResponseDTO userResponseDTO = UserMapper.INSTANCE.userSignInEntityToDTO(user);
 		userResponseDTO.setToken(token);
+		userResponseDTO.setMessage("user created successfully");
 		user.setRole(Role.USER);
 		userRepository.save(user);
 
