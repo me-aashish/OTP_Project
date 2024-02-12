@@ -2,6 +2,7 @@ package com.otp.project.otpproject.entities;
 
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.util.UUID;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -22,9 +23,9 @@ import lombok.NoArgsConstructor;
 public class MfaValidation {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
-	private int id;
+	@Column(name = "uuid")
+	@GeneratedValue(strategy = GenerationType.UUID)
+	private UUID uuid;
 
 	@Column(name = "user_email")
 	private String userEmail;
@@ -40,6 +41,9 @@ public class MfaValidation {
 
 	@Column(name = "validated_at")
 	private Timestamp validatedAt;
+
+	@Column(name = "is_active")
+	private boolean isActive;
 
 	@PrePersist
 	protected void onCreate() {
