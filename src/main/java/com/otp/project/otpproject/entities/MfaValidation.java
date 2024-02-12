@@ -30,7 +30,7 @@ public class MfaValidation {
 	private String userEmail;
 
 	@Column(name = "otp")
-	private int otp;
+	private String otp;
 
 	@Column(name = "created_at")
 	private Timestamp createdAt;

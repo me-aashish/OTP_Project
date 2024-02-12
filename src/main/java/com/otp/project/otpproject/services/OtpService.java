@@ -7,6 +7,7 @@ import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.List;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.otp.project.otpproject.dto.OtpRequestDTO;
@@ -33,6 +34,8 @@ public class OtpService {
 
 	private final MfaValidationRepsitory mfaValidationRepsitory;
 
+	private final PasswordEncoder passwordEncoder;
+
 	public OtpResponseDTO generateOtp(String authorizationHeader) throws MessagingException {
 
 		// extracting bearer token from auth header
@@ -44,6 +47,9 @@ public class OtpService {
 		// generating otp
 		String otp = generateOtpUtil.generateOtp();
 
+		// hashing otp before saving to db
+		String hashedOtp = passwordEncoder.encode(otp);
+
 		// calling java mailer to send mail
 		emailUtil.sendOtpEmail(email, otp);
 
@@ -54,7 +60,7 @@ public class OtpService {
 		// saving data to database
 		MfaValidation mfaValidation = new MfaValidation();
 		mfaValidation.setUserEmail(email);
-		mfaValidation.setOtp(Integer.parseInt(otp));
+		mfaValidation.setOtp(hashedOtp);
 		mfaValidationRepsitory.save(mfaValidation);
 
 		// return the response
@@ -66,7 +72,7 @@ public class OtpService {
 			HttpServletResponse response) throws InvalidOtpException, IOException {
 
 		// get the entered otp
-		int otp = otpRequestDTO.getOtp();
+		String otp = otpRequestDTO.getOtp();
 
 		// extract token from auth header
 		String token = authorizationHeader.substring(7);
@@ -82,11 +88,10 @@ public class OtpService {
 
 		// created response object
 		OtpResponseDTO otpResponseDTO = new OtpResponseDTO();
-
 		// iterating over list of otps
 		for (MfaValidation otpObject : listMfaValidationList) {
 
-			if (otpObject.getOtp() == otp) {
+			if (passwordEncoder.matches(otp, otpObject.getOtp())) {
 				// checking otp expiration
 				if (otpObject.getExpiryAt().getTime() <= Timestamp.from(Instant.now()).getTime()) {
 					throw new InvalidOtpException("OTP expired, please generate a new one");
@@ -122,11 +127,8 @@ public class OtpService {
 
 		// Copy the content from the document URL to the response output stream
 		connection.getInputStream().transferTo(response.getOutputStream());
-
-		// Flush and close the response output stream
 		response.flushBuffer();
 		return otpResponseDTO;
-
 	}
 
 }

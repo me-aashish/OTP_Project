@@ -9,5 +9,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class OtpRequestDTO {
 
-	private int otp;
+	private String otp;
 }
