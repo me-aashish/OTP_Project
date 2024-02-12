@@ -2,20 +2,17 @@ package com.otp.project.OTPProject.utlis;
 
 import java.util.Random;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.otp.project.OTPProject.configs.ApplicationConfig;
 
+import lombok.RequiredArgsConstructor;
+
 @Component
+@RequiredArgsConstructor
 public class GenerateOtpUtil {
 
 	private final ApplicationConfig applicationConfig;
-
-	@Autowired
-	public GenerateOtpUtil(ApplicationConfig applicationConfig) {
-		this.applicationConfig = applicationConfig;
-	}
 
 	public String generateOtp() {
 

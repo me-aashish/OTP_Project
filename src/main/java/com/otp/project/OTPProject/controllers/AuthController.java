@@ -1,6 +1,5 @@
 package com.otp.project.OTPProject.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,19 +8,21 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.otp.project.OTPProject.DTO.UserLogInRequestDTO;
-import com.otp.project.OTPProject.DTO.UserLogInResponseDTO;
-import com.otp.project.OTPProject.DTO.UserSignInRequestDTO;
-import com.otp.project.OTPProject.DTO.UserSignInResponseDTO;
+import com.otp.project.OTPProject.dto.UserLogInRequestDTO;
+import com.otp.project.OTPProject.dto.UserLogInResponseDTO;
+import com.otp.project.OTPProject.dto.UserSignInRequestDTO;
+import com.otp.project.OTPProject.dto.UserSignInResponseDTO;
 import com.otp.project.OTPProject.exceptions.UserAlreadyExistsException;
 import com.otp.project.OTPProject.services.AuthService;
 
+import lombok.RequiredArgsConstructor;
+
 @RestController
 @RequestMapping("/api/v1/auth")
+@RequiredArgsConstructor
 public class AuthController {
 
-	@Autowired
-	AuthService authService;
+	private final AuthService authService;
 
 	@PostMapping("/signup")
 	public ResponseEntity<UserSignInResponseDTO> signUpUser(@RequestBody UserSignInRequestDTO userRequestDTO) {

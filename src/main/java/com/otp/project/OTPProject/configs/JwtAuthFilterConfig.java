@@ -2,7 +2,6 @@ package com.otp.project.OTPProject.configs;
 
 import java.io.IOException;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,8 +22,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class JwtAuthFilterConfig extends OncePerRequestFilter {
 
-	@Autowired
-	JwtService jwtService;
+	private final JwtService jwtService;
 
 	private final UserDetailsService userDetailsService;
 

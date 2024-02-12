@@ -1,4 +1,4 @@
-package com.otp.project.OTPProject.DTO;
+package com.otp.project.OTPProject.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,7 +7,8 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class OtpRequestDTO {
+public class UserSignInResponseDTO {
 
-	private int otp;
+	private String token;
+	private String message;
 }

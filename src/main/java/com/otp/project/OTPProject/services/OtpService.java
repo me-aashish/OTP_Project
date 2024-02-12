@@ -7,11 +7,10 @@ import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.otp.project.OTPProject.DTO.OtpRequestDTO;
-import com.otp.project.OTPProject.DTO.OtpResponseDTO;
+import com.otp.project.OTPProject.dto.OtpRequestDTO;
+import com.otp.project.OTPProject.dto.OtpResponseDTO;
 import com.otp.project.OTPProject.entities.MfaValidation;
 import com.otp.project.OTPProject.exceptions.InvalidOtpException;
 import com.otp.project.OTPProject.repositories.MfaValidationRepsitory;
@@ -20,21 +19,19 @@ import com.otp.project.OTPProject.utlis.GenerateOtpUtil;
 
 import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class OtpService {
 
-	@Autowired
-	JwtService jwtService;
+	private final JwtService jwtService;
 
-	@Autowired
-	GenerateOtpUtil generateOtpUtil;
+	private final GenerateOtpUtil generateOtpUtil;
 
-	@Autowired
-	EmailUtil emailUtil;
+	private final EmailUtil emailUtil;
 
-	@Autowired
-	MfaValidationRepsitory mfaValidationRepsitory;
+	private final MfaValidationRepsitory mfaValidationRepsitory;
 
 	public OtpResponseDTO generateOtp(String authorizationHeader) {
 

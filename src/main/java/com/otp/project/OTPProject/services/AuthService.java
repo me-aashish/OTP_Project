@@ -2,16 +2,15 @@ package com.otp.project.OTPProject.services;
 
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.otp.project.OTPProject.DTO.UserLogInRequestDTO;
-import com.otp.project.OTPProject.DTO.UserLogInResponseDTO;
-import com.otp.project.OTPProject.DTO.UserSignInRequestDTO;
-import com.otp.project.OTPProject.DTO.UserSignInResponseDTO;
+import com.otp.project.OTPProject.dto.UserLogInRequestDTO;
+import com.otp.project.OTPProject.dto.UserLogInResponseDTO;
+import com.otp.project.OTPProject.dto.UserSignInRequestDTO;
+import com.otp.project.OTPProject.dto.UserSignInResponseDTO;
 import com.otp.project.OTPProject.entities.User;
 import com.otp.project.OTPProject.exceptions.EmailOrPasswordException;
 import com.otp.project.OTPProject.exceptions.UserAlreadyExistsException;
@@ -19,20 +18,19 @@ import com.otp.project.OTPProject.mappers.UserMapper;
 import com.otp.project.OTPProject.repositories.UserRepository;
 import com.otp.project.OTPProject.utlis.Role;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class AuthService {
 
-	@Autowired
-	UserRepository userRepository;
+	private final UserRepository userRepository;
 
-	@Autowired
-	JwtService jwtService;
+	private final JwtService jwtService;
 
-	@Autowired
-	PasswordEncoder passwordEncoder;
+	private final PasswordEncoder passwordEncoder;
 
-	@Autowired
-	AuthenticationManager authenticationManager;
+	private final AuthenticationManager authenticationManager;
 
 	public UserSignInResponseDTO singUpUser(UserSignInRequestDTO userRequestDTO) throws UserAlreadyExistsException {
 

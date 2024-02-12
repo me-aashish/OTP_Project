@@ -3,10 +3,10 @@ package com.otp.project.OTPProject.mappers;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
-import com.otp.project.OTPProject.DTO.UserLogInRequestDTO;
-import com.otp.project.OTPProject.DTO.UserLogInResponseDTO;
-import com.otp.project.OTPProject.DTO.UserSignInRequestDTO;
-import com.otp.project.OTPProject.DTO.UserSignInResponseDTO;
+import com.otp.project.OTPProject.dto.UserLogInRequestDTO;
+import com.otp.project.OTPProject.dto.UserLogInResponseDTO;
+import com.otp.project.OTPProject.dto.UserSignInRequestDTO;
+import com.otp.project.OTPProject.dto.UserSignInResponseDTO;
 import com.otp.project.OTPProject.entities.User;
 
 @Mapper
