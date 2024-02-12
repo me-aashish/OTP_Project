@@ -51,4 +51,17 @@ public class OtpController {
 			return new ResponseEntity<>(otpResponseDTO, HttpStatus.BAD_REQUEST);
 		}
 	}
+
+	@PostMapping("/validateOTP")
+	public ResponseEntity<OtpResponseDTO> validateOtp(@RequestHeader("Authorization") String authorizationHeader,
+			@RequestBody OtpRequestDTO otpRequestDTO) {
+		try {
+
+			return new ResponseEntity<>(otpService.validateOtp(authorizationHeader, otpRequestDTO), HttpStatus.OK);
+		} catch (Exception e) {
+			OtpResponseDTO otpResponseDTO = new OtpResponseDTO();
+			otpResponseDTO.setMessage(e.getMessage());
+			return new ResponseEntity<>(otpResponseDTO, HttpStatus.BAD_REQUEST);
+		}
+	}
 }

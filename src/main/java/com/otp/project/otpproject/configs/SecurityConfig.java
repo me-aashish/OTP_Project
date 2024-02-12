@@ -26,9 +26,9 @@ public class SecurityConfig {
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http.cors(withDefaults()).csrf(csrf -> csrf.disable())
-				.authorizeHttpRequests(authorizeRequests -> authorizeRequests
-						.requestMatchers("/api/v1/auth/**", "/api/v1/generateOTP", "/api/v1/documentDownload")
-						.permitAll().anyRequest().authenticated())
+				.authorizeHttpRequests(authorizeRequests -> authorizeRequests.requestMatchers("/api/v1/auth/**",
+						"/api/v1/generateOTP", "/api/v1/documentDownload", "/api/v1/validateOTP").permitAll()
+						.anyRequest().authenticated())
 				.exceptionHandling(exception -> exception.authenticationEntryPoint(jwtAuthenticationEntryPoint))
 				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 				.authenticationProvider(authenticationProvider)

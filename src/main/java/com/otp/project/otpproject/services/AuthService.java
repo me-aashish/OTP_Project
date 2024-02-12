@@ -78,6 +78,7 @@ public class AuthService {
 		String token = jwtService.generateToken(user);
 
 		userLogInResponseDTO.setToken(token);
+		userLogInResponseDTO.setMessage("logged in successfully");
 
 		return userLogInResponseDTO;
 	}
