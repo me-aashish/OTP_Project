@@ -1,6 +1,7 @@
 package com.otp.project.OTPProject.configs;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,6 +20,9 @@ public class ApplicationConfig {
 
 	@Autowired
 	UserRepository userRepository;
+
+	@Value("${otp.length}")
+	private int otpLength;
 
 	// user details config
 	@Bean
@@ -50,5 +54,9 @@ public class ApplicationConfig {
 	@Bean
 	public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
 		return config.getAuthenticationManager();
+	}
+
+	public int getOtpLength() {
+		return otpLength;
 	}
 }
