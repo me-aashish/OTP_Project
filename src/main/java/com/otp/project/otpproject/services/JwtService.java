@@ -6,21 +6,23 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+
+import com.otp.project.otpproject.configs.ApplicationConfig;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class JwtService {
 
-	@Value("${encryption.key}")
-	private String encryptionKey;
+	private final ApplicationConfig applicationConfig;
 
 	public String extractUserEmail(String token) {
 		return extractClaim(token, Claims::getSubject);
@@ -36,7 +38,7 @@ public class JwtService {
 	}
 
 	private Key getSignInKey() {
-		byte[] keyBytes = Decoders.BASE64.decode(encryptionKey);
+		byte[] keyBytes = Decoders.BASE64.decode(applicationConfig.getEncryptionKey());
 		return Keys.hmacShaKeyFor(keyBytes);
 	}
 
@@ -45,7 +47,8 @@ public class JwtService {
 
 		return Jwts.builder().setClaims(extraClaims).setSubject(userDetails.getUsername())
 				.setIssuedAt(new Date(System.currentTimeMillis()))
-				.setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24))
+				.setExpiration(new Date(System.currentTimeMillis()
+						+ 1000 * 60 * applicationConfig.getJwtTokenExpirationTimeInMinutes()))
 				.signWith(getSignInKey(), SignatureAlgorithm.HS256).compact();
 	}
 

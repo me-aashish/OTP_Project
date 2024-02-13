@@ -37,13 +37,11 @@ public class OtpController {
 	}
 
 	@PostMapping("/documentDownload")
-	public ResponseEntity<OtpResponseDTO> validateOtpAndDownloadDocument(
-			@RequestHeader("Authorization") String authorizationHeader, @RequestBody OtpRequestDTO otpRequestDTO,
+	public ResponseEntity<OtpResponseDTO> validateOtpAndDownloadDocument(@RequestBody OtpRequestDTO otpRequestDTO,
 			HttpServletResponse response) {
 		try {
 
-			return new ResponseEntity<>(
-					otpService.validateOtpAndDownloadDocument(authorizationHeader, otpRequestDTO, response),
+			return new ResponseEntity<>(otpService.validateOtpAndDownloadDocument(otpRequestDTO, response),
 					HttpStatus.OK);
 		} catch (Exception e) {
 			OtpResponseDTO otpResponseDTO = new OtpResponseDTO();
@@ -53,11 +51,10 @@ public class OtpController {
 	}
 
 	@PostMapping("/validateOTP")
-	public ResponseEntity<OtpResponseDTO> validateOtp(@RequestHeader("Authorization") String authorizationHeader,
-			@RequestBody OtpRequestDTO otpRequestDTO) {
+	public ResponseEntity<OtpResponseDTO> validateOtp(@RequestBody OtpRequestDTO otpRequestDTO) {
 		try {
 
-			return new ResponseEntity<>(otpService.validateOtp(authorizationHeader, otpRequestDTO), HttpStatus.OK);
+			return new ResponseEntity<>(otpService.validateOtp(otpRequestDTO), HttpStatus.OK);
 		} catch (Exception e) {
 			OtpResponseDTO otpResponseDTO = new OtpResponseDTO();
 			otpResponseDTO.setMessage(e.getMessage());

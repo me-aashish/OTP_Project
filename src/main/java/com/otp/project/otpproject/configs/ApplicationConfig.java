@@ -24,8 +24,20 @@ public class ApplicationConfig {
 
 	private final UserRepository userRepository;
 
+	// get otp length
 	@Value("${otp.length}")
 	private int otpLength;
+
+	// get otp expiration time from application.yaml file
+	@Value("${otp.expiration_time_in_minutes}")
+	private int otpExpirationTimeInMinutes;
+
+	@Value("${encryption.key}")
+	private String encryptionKey;
+
+	// get jwt token expiration time
+	@Value("${jwtToken.expiration_time_in_minutes}")
+	private int jwtTokenExpirationTimeInMinutes;
 
 	// user details config
 	@Bean
@@ -67,4 +79,17 @@ public class ApplicationConfig {
 	public int getOtpLength() {
 		return otpLength;
 	}
+
+	public int getOtpExpirationTimeInMinutes() {
+		return otpExpirationTimeInMinutes;
+	}
+
+	public String getEncryptionKey() {
+		return encryptionKey;
+	}
+
+	public int getJwtTokenExpirationTimeInMinutes() {
+		return jwtTokenExpirationTimeInMinutes;
+	}
+
 }

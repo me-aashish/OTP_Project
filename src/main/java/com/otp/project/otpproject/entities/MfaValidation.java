@@ -9,17 +9,16 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "mfa_validation")
 @Entity
+@NoArgsConstructor
 public class MfaValidation {
 
 	@Id
@@ -45,11 +44,10 @@ public class MfaValidation {
 	@Column(name = "is_active")
 	private boolean isActive;
 
-	@PrePersist
-	protected void onCreate() {
+	public void onCreate(int getOtpExpirationTimeInMinutes) {
 		Timestamp currentTimestamp = Timestamp.from(Instant.now());
 		this.createdAt = currentTimestamp;
-		this.expiryAt = new Timestamp(currentTimestamp.getTime() + (5 * 60 * 1000)); // Add 5 minutes in milliseconds
+		this.expiryAt = new Timestamp(currentTimestamp.getTime() + (getOtpExpirationTimeInMinutes * 60 * 1000)); // Add otp expiration time in milliseconds
 	}
 
 }
