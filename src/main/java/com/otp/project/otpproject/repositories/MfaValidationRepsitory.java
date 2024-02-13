@@ -16,7 +16,7 @@ public interface MfaValidationRepsitory extends JpaRepository<MfaValidation, UUI
 
 	MfaValidation getByUserEmail(String email);
 
-	@Query(value = "SELECT * FROM mfa_validation m WHERE m.uuid = :requestId", nativeQuery = true)
+	@Query(value = "SELECT * FROM mfa_validation m WHERE m.uuid = :requestId and m.is_active = true", nativeQuery = true)
 	MfaValidation getActiveOtp(UUID requestId);
 
 	@Transactional
